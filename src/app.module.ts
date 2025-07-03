@@ -2,14 +2,20 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Request } from 'express';
+import { join } from 'path';
+
 import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module'; // se estiver usando
+
 @Module({
   imports: [
     AuthModule,
+    UserModule, // se necessário
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./**/*.graphql'],
-      context: ({ req }: {req: Request}) => {
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      context: ({ req }: { req: Request }) => {
         const token = req.headers.authorization || '';
         let user = null;
 

@@ -13,11 +13,8 @@ export class CreateUserUseCase implements CreateUserInputPort {
   ) {}
 
   async execute(input: CreateUserDTO): Promise<User> {
-    const existing = await this.userRepo.findByEmail(input.email);
-    if (existing) throw new Error('Email já está em uso.');
 
-    const hashedPassword = await bcrypt.hash(input.password, 10);
-    const user = new User(input.name, input.email, hashedPassword, input.role);
+    const user = new User(input.name, input.email, input.password, input.role);
     return this.userRepo.create(user);
   }
 }

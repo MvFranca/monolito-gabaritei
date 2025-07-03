@@ -5,14 +5,19 @@ import { SigninUserUseCase } from './application/use-cases/signin-user.use-case'
 import { PrismaService } from 'src/core/database/prisma.service';
 import { UserPrismaAdapter } from '../user/adapters/prisma/user-prisma.adapter';
 import { UserModule } from '../user/user.module';
+import { JwtModule } from 'src/core/services/jwt/jwt.module';
+import { SignupMapper } from './mappers/signup.mapper';
+import { SignupUserUseCase } from './application/use-cases/signup-user.use-case';
 
 @Module({
-  imports: [UserModule], 
+  imports: [UserModule, JwtModule], 
   providers: [
     AuthResolver,
     CreateUserUseCase,
     SigninUserUseCase,
+    SignupUserUseCase,
     PrismaService,
+    SignupMapper,
     {
       provide: 'UserRepository',
       useClass: UserPrismaAdapter,
@@ -20,6 +25,10 @@ import { UserModule } from '../user/user.module';
     {
       provide: 'CreateUserInputPort',
       useClass: CreateUserUseCase,
+    },
+        {
+      provide: 'SignupUserInputPort',
+      useClass: SignupUserUseCase,
     },
   ],
 })

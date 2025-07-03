@@ -18,5 +18,7 @@ import { PrismaModule } from '../../core/database/database.module';
     },
     CreateUserUseCase,
   ],
+
+  exports: ['CreateUserInputPort', ],
 })
 export class UserModule {}

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { AuthModule } from './module/auth.module';
 import { Request } from 'express';
-import { AuthModule } from './modules/auth/auth.module';
+
 @Module({
   imports: [
     AuthModule,

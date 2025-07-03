@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthPayload {
+  token: String!
+}
+
+type Mutation {
+  signup(input: SignupInput!): AuthPayload!
+}
+
+type Query {
+  hello: String!
+}
+
+"""User role enum"""
+enum Role {
+  ADMIN
+  USER
+}
+
+input SignupInput {
+  email: String!
+  name: String!
+  password: String!
+  role: Role!
+}

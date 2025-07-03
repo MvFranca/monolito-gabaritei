@@ -2,15 +2,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { UserRepositoryPort } from '../../domain/ports/user.repository';
 import { User } from '../../domain/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
-import { Role } from '@prisma/client';
 import { CreateUserInputPort } from '../ports/create-user.input-port';
-
-interface CreateUserDTO {
-  name: string;
-  email: string;
-  password: string;
-  role: Role;
-}
+import { CreateUserDTO } from '../dto/create-user.input-dto';
 
 @Injectable()
 export class CreateUserUseCase implements CreateUserInputPort {

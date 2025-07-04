@@ -5,12 +5,12 @@ import { Request } from 'express';
 import { join } from 'path';
 
 import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/user.module'; // se estiver usando
+import { UserModule } from './modules/user/user.module'; 
 
 @Module({
   imports: [
     AuthModule,
-    UserModule, // se necessário
+    UserModule, 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),

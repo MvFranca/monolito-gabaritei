@@ -1,4 +1,3 @@
-// src/core/services/jwt/jwt.module.
 import { Module } from '@nestjs/common';
 import { JwtService } from './jwt.service';
 

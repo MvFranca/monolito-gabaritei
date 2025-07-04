@@ -1,0 +1,53 @@
+# NestJS GraphQL API
+
+Este projeto é uma API robusta construída com **NestJS**, **GraphQL** (Apollo), **Prisma ORM**, e **JWT** para autenticação. A arquitetura segue princípios da **Clean Architecture** e **Arquitetura Hexagonal**, promovendo separação de responsabilidades, escalabilidade e facilidade de manutenção.
+
+---
+
+## 📦 Tecnologias Utilizadas
+
+- [NestJS](https://nestjs.com/) – Framework Node.js progressivo
+- [GraphQL](https://graphql.org/) – API flexível com tipagem forte
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/) – Servidor GraphQL
+- [Prisma ORM](https://www.prisma.io/) – ORM moderno e tipo-safe
+- [JWT](https://jwt.io/) – Autenticação baseada em token
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js/) – Hash de senhas
+- [Class Validator / Transformer](https://github.com/typestack/class-validator) – Validação de DTOs
+
+---
+
+## 🚀 Scripts Disponíveis
+
+| Comando        | Descrição                               |
+|----------------|-------------------------------------------|
+| `npm run start`     | Inicia o servidor em produção (`dist/`)        |
+| `npm run start:dev` | Inicia o servidor em modo de desenvolvimento com Hot Reload |
+| `npm run build`     | Compila o projeto para a pasta `dist/`          |
+
+---
+
+## 📁 Estrutura de Pastas
+
+```bash
+src/
+├── core/
+│   ├── database/              # Serviço de conexão com os bancos (ex: PrismaService)
+│   └── services/
+│       └── jwt/               # Serviço para geração e verificação de JWT
+├── modules/
+│   ├── user/                  # Módulo de usuários
+│   │   ├── domain/            # Entidades, interfaces (ports)
+│   │   ├── application/       # Casos de uso, DTOs, interfaces de entrada
+│   │   ├── adapters/          # Implementações (ex: Prisma)
+│   │   └── user.module.ts
+│   └── auth/                  # Módulo de autenticação
+│       ├── domain/            # (se necessário)
+│       ├── application/       # UseCases de signup/signin
+│       ├── mappers/           # Mapeadores de input
+│       ├── presentation/
+│       │   └── graphql/
+│       │       └── resolvers/
+│       │           └── auth.resolver.ts
+│       └── auth.module.ts
+├── app.module.ts              # Módulo principal
+└── main.ts                    # Arquivo de bootstrap

@@ -1,6 +1,7 @@
-# NestJS GraphQL API
+## NestJS GraphQL API
 
-Este projeto é uma API robusta construída com **NestJS**, **GraphQL** (Apollo), **Prisma ORM**, e **JWT** para autenticação. A arquitetura segue princípios da **Clean Architecture** e **Arquitetura Hexagonal**, promovendo separação de responsabilidades, escalabilidade e facilidade de manutenção.
+Este projeto é uma API robusta construída com **NestJS**, **GraphQL** (Apollo), **Prisma ORM**, e **JWT** para autenticação.  
+A arquitetura segue princípios da **Clean Architecture** e **Arquitetura Hexagonal**, promovendo separação de responsabilidades, escalabilidade e facilidade de manutenção.
 
 ---
 
@@ -9,7 +10,7 @@ Este projeto é uma API robusta construída com **NestJS**, **GraphQL** (Apollo)
 - [NestJS](https://nestjs.com/) – Framework Node.js progressivo
 - [GraphQL](https://graphql.org/) – API flexível com tipagem forte
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/) – Servidor GraphQL
-- [Prisma ORM](https://www.prisma.io/) – ORM moderno e tipo-safe
+- [Prisma ORM](https://www.prisma.io/) – ORM moderno e type-safe
 - [JWT](https://jwt.io/) – Autenticação baseada em token
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js/) – Hash de senhas
 - [Class Validator / Transformer](https://github.com/typestack/class-validator) – Validação de DTOs
@@ -18,11 +19,11 @@ Este projeto é uma API robusta construída com **NestJS**, **GraphQL** (Apollo)
 
 ## 🚀 Scripts Disponíveis
 
-| Comando        | Descrição                               |
-|----------------|-------------------------------------------|
-| `npm run start`     | Inicia o servidor em produção (`dist/`)        |
-| `npm run start:dev` | Inicia o servidor em modo de desenvolvimento com Hot Reload |
-| `npm run build`     | Compila o projeto para a pasta `dist/`          |
+| Comando             | Descrição                                                              |
+|---------------------|------------------------------------------------------------------------|
+| `npm run start`     | Inicia o servidor em produção (`dist/`)                                |
+| `npm run start:dev` | Inicia o servidor em modo de desenvolvimento com Hot Reload            |
+| `npm run build`     | Compila o projeto para a pasta `dist/`                                 |
 
 ---
 

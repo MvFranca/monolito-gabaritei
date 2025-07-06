@@ -24,12 +24,9 @@ export class SignupUserUseCase implements SignupUserInputPort<SigninDTO, string 
     role,
   }: SignupDTO): Promise<string | undefined> {
 
-    const [hashedPassword, existingUser] = await Promise.all([
+    const [hashedPassword] = await Promise.all([
       await bcrypt.hash(password, 10),
-      this.userRepo.findByEmail(email)
     ]);
-
-    if (existingUser) throw new Error("Email já está em uso.");
 
     await this.createUser.execute({
       name,
@@ -37,6 +34,7 @@ export class SignupUserUseCase implements SignupUserInputPort<SigninDTO, string 
       password: hashedPassword,
       role,
     });
+    
     const token = this.jwtService.sign({
       email,
       name,

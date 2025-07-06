@@ -14,7 +14,8 @@ export class SignupInput {
   name!: string;
 
   @Field()
-  @IsEmail()
+  @IsNotEmpty()
+  @IsEmail({}, { message: 'E-mail inválido' })
   email!: string;
 
   @Field()

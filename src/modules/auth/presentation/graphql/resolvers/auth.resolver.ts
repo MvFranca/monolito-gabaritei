@@ -17,7 +17,7 @@ export class AuthResolver {
 
   @Mutation(() => AuthPayload)
   async signup(@Args('input') input: SignupInput) {
-    const dto = this.signupMapper.toDTO(input);
+    const dto = await this.signupMapper.transform(input);
     const token = await this.signupUserInputPort.execute(dto);
     return { token };
   }

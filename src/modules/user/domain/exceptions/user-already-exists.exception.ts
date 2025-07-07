@@ -1,6 +1,7 @@
-export class UserAlreadyExistsException extends Error {
+import { HttpException, HttpStatus } from "@nestjs/common";
+
+export class UserAlreadyExistsException extends HttpException {
   constructor(email: string) {
-    super(`Este email já está em uso`);
-    this.name = 'UserAlreadyExistsException';
+    super(`Este email já está em uso`, HttpStatus.CONFLICT);
   }
 }

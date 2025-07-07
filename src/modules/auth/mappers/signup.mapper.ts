@@ -1,6 +1,6 @@
 
 import { CreateUserDTO } from 'src/modules/user/application/dto/create-user.input-dto';
-import { SignupInput } from '../presentation/graphql/dto/signup.input';
+import { SignupInput } from '../presentation/graphql/dto/signup.input.graphql';
 import { Injectable } from '@nestjs/common';
 import { BaseMapper } from 'src/core/mappers/base.mapper';
 
@@ -11,7 +11,7 @@ export class SignupMapper extends BaseMapper<SignupInput, CreateUserDTO>{
       name: input.name,
       email: input.email,
       password: input.password,
-      role: input.role,
+      role: "USER",
     };
   }
 }

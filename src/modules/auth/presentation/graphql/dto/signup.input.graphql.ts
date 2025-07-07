@@ -19,10 +19,6 @@ export class SignupInput {
   email!: string;
 
   @Field()
-  @MinLength(6)
+  @MinLength(6, { message: 'A senha deve ter pelo menos 6 caracteres' })
   password!: string;
-
-  @Field(() => Role)
-  @IsEnum(Role)
-  role!: Role;
 }

@@ -20,4 +20,19 @@ export class JwtService {
       },
     );
   }
+
+  verify(token: string): User {
+    try {
+      const decoded = jwt.verify(token, this.secret) as User;
+      return decoded;
+    } catch (error) {
+      throw new Error('Invalid token');
+    }
+  } 
+
+  generateToken({id, role}: {id: string, role: string}): string {
+    return jwt.sign({ userId: id, role: role }, this.secret, {
+      expiresIn: '7d',
+    });
+  }
 }

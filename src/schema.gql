@@ -3,10 +3,12 @@
 # ------------------------------------------------------
 
 type AuthPayload {
+  message: String!
   token: String!
 }
 
 type Mutation {
+  signin(input: SigninInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
 }
 
@@ -14,15 +16,13 @@ type Query {
   hello: String!
 }
 
-"""User role enum"""
-enum Role {
-  ADMIN
-  USER
+input SigninInput {
+  email: String!
+  password: String!
 }
 
 input SignupInput {
   email: String!
   name: String!
   password: String!
-  role: Role!
 }

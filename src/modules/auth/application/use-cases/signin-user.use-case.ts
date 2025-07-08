@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { generateToken } from 'src/core/utils/token.util';
 import { UserRepositoryPort } from 'src/modules/user/domain/ports/user.repository';
 import { SigninUserInputPort } from '../ports/signin-user.input-port';
 import { SigninDTO } from '../dto/sigin.input-dto';

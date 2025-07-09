@@ -1,6 +1,6 @@
 
 import { CreateUserDTO } from 'src/modules/user/application/dto/create-user.input-dto';
-import { SignupInput } from '../presentation/graphql/dto/signup.input.graphql';
+import { SignupInput } from '../presentation/graphql/dto/in/signup.input.graphql';
 import { Injectable } from '@nestjs/common';
 import { BaseMapper } from 'src/core/mappers/base.mapper';
 

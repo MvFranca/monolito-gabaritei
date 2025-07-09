@@ -5,6 +5,7 @@
 type AuthPayload {
   message: String!
   token: String!
+  user: UserGraphQLType!
 }
 
 type Mutation {
@@ -25,4 +26,10 @@ input SignupInput {
   email: String!
   name: String!
   password: String!
+}
+
+type UserGraphQLType {
+  email: String!
+  id: ID!
+  name: String!
 }

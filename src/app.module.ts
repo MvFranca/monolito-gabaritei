@@ -16,22 +16,22 @@ import { UserModule } from './modules/user/user.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       context: ({ req }: { req: Request }) => {
-        const token = req.headers.authorization || '';
-        let user = null;
+        // const token = req.headers.authorization || '';
+        // let user = null;
 
-        if (token) {
-          try {
-            const decoded = require('jsonwebtoken').verify(
-              token.replace('Bearer ', ''),
-              process.env.SECRET_KEY,
-            ) as { userId: string; role: string };
-            user = { id: decoded.userId, role: decoded.role };
-          } catch (err) {
-            console.error('Invalid token');
-          }
-        }
+        // if (token) {
+        //   try {
+        //     const decoded = require('jsonwebtoken').verify(
+        //       token.replace('Bearer ', ''),
+        //       process.env.SECRET_KEY,
+        //     ) as { userId: string; role: string };
+        //     user = { id: decoded.userId, role: decoded.role };
+        //   } catch (err) {
+        //     console.error('Invalid token');
+        //   }
+        // }
 
-        return { user };
+        // return { user };
       },
     }),
   ],

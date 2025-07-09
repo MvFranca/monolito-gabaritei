@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { BaseMapper } from 'src/core/mappers/base.mapper';
-import { SigninInput } from '../presentation/graphql/dto/signin.input.graphql';
+import { SigninInput } from '../presentation/graphql/dto/in/signin.input.graphql';
 import { SigninDTO } from '../application/dto/sigin.input-dto';
 
 @Injectable()

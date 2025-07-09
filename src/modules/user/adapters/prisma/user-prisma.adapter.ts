@@ -12,7 +12,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export class UserPrismaAdapter implements UserRepositoryPort {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User | null> {
     try {
       return await this.prisma.user.findUnique({ where: { email } });
     } catch (error) {

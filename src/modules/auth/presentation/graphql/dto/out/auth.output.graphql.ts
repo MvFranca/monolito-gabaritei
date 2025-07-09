@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { UserGraphQLType } from './user.output.graphql';
 
 @ObjectType()
 export class AuthPayload {
@@ -7,4 +8,7 @@ export class AuthPayload {
   
   @Field()
   message?: string;
+
+  @Field(() => UserGraphQLType)
+  user?: UserGraphQLType;
 }

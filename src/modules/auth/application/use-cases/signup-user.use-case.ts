@@ -4,8 +4,9 @@ import * as bcrypt from "bcryptjs";
 import { CreateUserInputPort } from "src/modules/user/application/ports/create-user.input-port";
 import { JwtService } from "src/core/services/jwt/jwt.service";
 import { SignupUserInputPort } from "../ports/signup-user.input-port";
+import { AuthResponse } from "../../presentation/graphql/types/user.type";
 
-export class SignupUserUseCase implements SignupUserInputPort<SignupDTO, string | undefined> 
+export class SignupUserUseCase implements SignupUserInputPort<SignupDTO, string | AuthResponse> 
 {
   constructor(
     @Inject("CreateUserInputPort")
@@ -18,19 +19,18 @@ export class SignupUserUseCase implements SignupUserInputPort<SignupDTO, string 
     name,
     password,
     role,
-  }: SignupDTO): Promise<string | undefined> {
+  }: SignupDTO): Promise<string | AuthResponse> {
 
     const [hashedPassword] = await Promise.all([
       await bcrypt.hash(password, 10),
     ]);
     
-    await this.createUser.execute({
+    const user =await this.createUser.execute({
       name,
       email,
       password: hashedPassword,
       role,
     });
-    
     const token = this.jwtService.sign({
       email,
       name,
@@ -38,6 +38,6 @@ export class SignupUserUseCase implements SignupUserInputPort<SignupDTO, string 
       role,
     });
 
-    return token;
+    return { token, user: { id: user.id!, name: user.name, email: user.email } };
   }
 }

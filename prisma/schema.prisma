@@ -7,6 +7,173 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                 String                @id @default(uuid())
+  name               String
+  email              String                @unique
+  password           String
+  role               Role
+  createdAt          DateTime              @default(now())
+  elo                EloUser[]
+  points             PointsUser[]
+  UserAchievement    UserAchievement[]
+  contentProgress    UserContentProgress[]
+  contentRevision    UserContentRevision[]
+  UserQuestionAnswer UserQuestionAnswer[]
+}
+
+model Content {
+  id          String                @id @default(uuid())
+  submoduleId String
+  name        String
+  description String
+  position    Int
+  weight      Int
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  buttons     Json
+  moduleId    String?
+  Module      Module?               @relation(fields: [moduleId], references: [id])
+  submodule   Submodule             @relation(fields: [submoduleId], references: [id])
+  progress    UserContentProgress[]
+  revision    UserContentRevision[]
+  metadata    MetaQuestions[]       @relation("ContentMetadata")
+}
+
+model Module {
+  id          String                @id @default(uuid())
+  name        String
+  description String
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  contents    Content[]
+  elo         EloUser[]
+  submodules  Submodule[]
+  progress    UserContentProgress[]
+}
+
+model Submodule {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  moduleId    String
+  contents    Content[]
+  module      Module    @relation(fields: [moduleId], references: [id])
+}
+
+model MetaQuestions {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  contents Content[] @relation("ContentMetadata")
+}
+
+model UserContentProgress {
+  id              String   @id @default(uuid())
+  userId          String
+  moduleId        String
+  contentId       String
+  currentPosition Int
+  updatedAt       DateTime @updatedAt
+  content         Content  @relation(fields: [contentId], references: [id])
+  module          Module   @relation(fields: [moduleId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model UserContentRevision {
+  id        String   @id @default(uuid())
+  userId    String
+  contentId String
+  status    String
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  content   Content  @relation(fields: [contentId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model EloUser {
+  id        String   @id @default(uuid())
+  userId    String
+  moduleId  String
+  elo       EloType
+  xp        Int
+  updatedAt DateTime @updatedAt
+  module    Module   @relation(fields: [moduleId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model PointsUser {
+  id        String   @id @default(uuid())
+  userId    String
+  bow       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Question {
+  id                     String                  @id @default(uuid())
+  type                   TypeQuestion
+  createdAt              DateTime                @default(now())
+  pointsMax              Int
+  difficulty             Difficulty
+  dragAndDropQuestion    DragAndDropQuestion?
+  multipleChoiceQuestion MultipleChoiceQuestion?
+  userAnswers            UserQuestionAnswer[]
+}
+
+model DragAndDropQuestion {
+  id           String   @id
+  itemsOptions Json
+  targets      Json
+  correctPairs Json
+  question     Question @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model MultipleChoiceQuestion {
+  id            String   @id
+  statement     String
+  options       Json
+  correctAnswer String
+  question      Question @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model UserQuestionAnswer {
+  id         String   @id @default(uuid())
+  userId     String
+  questionId String
+  isCorrect  Boolean
+  answeredAt DateTime @default(now())
+  question   Question @relation(fields: [questionId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Achievement {
+  id          String            @id @default(uuid())
+  name        String
+  description String
+  iconUrl     String
+  users       UserAchievement[]
+}
+
+model UserAchievement {
+  id            String      @id @default(uuid())
+  userId        String
+  achievementId String
+  achievedAt    DateTime    @default(now())
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  user          User        @relation(fields: [userId], references: [id])
+}
+
+model ModuleMatterContent {
+  id        String   @id @default(uuid())
+  name      String
+  options   String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   USER
   ADMIN
@@ -31,185 +198,4 @@ enum EloType {
   BRONZE
   PRATA
   OURO
-}
-
-// Models
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role
-  createdAt DateTime @default(now())
-
-  contentProgress    UserContentProgress[]
-  contentRevision    UserContentRevision[]
-  elo                EloUser[]
-  points             PointsUser[]
-  UserQuestionAnswer UserQuestionAnswer[]
-  UserAchievement    UserAchievement[]
-}
-
-model Content {
-  id          String   @id @default(uuid())
-  submoduleId String
-  name        String
-  description String
-  position    Int
-  weight      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  buttons     Json
-
-  submodule Submodule             @relation(fields: [submoduleId], references: [id])
-  metadata  MetaQuestions[]       @relation("ContentMetadata")
-  progress  UserContentProgress[]
-  revision  UserContentRevision[]
-  Module    Module?               @relation(fields: [moduleId], references: [id])
-  moduleId  String?
-}
-
-model Module {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  submodules Submodule[]
-  contents   Content[] // conexão direta, se necessário
-  elo        EloUser[]
-  progress   UserContentProgress[]
-}
-
-model Submodule {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  moduleId String
-  module   Module    @relation(fields: [moduleId], references: [id])
-  contents Content[]
-}
-
-model MetaQuestions {
-  id       String    @id @default(uuid())
-  name     String    @unique
-  contents Content[] @relation("ContentMetadata")
-}
-
-model UserContentProgress {
-  id              String   @id @default(uuid())
-  userId          String
-  moduleId        String
-  contentId       String
-  currentPosition Int
-  updatedAt       DateTime @updatedAt
-
-  user    User    @relation(fields: [userId], references: [id])
-  module  Module  @relation(fields: [moduleId], references: [id])
-  content Content @relation(fields: [contentId], references: [id])
-}
-
-model UserContentRevision {
-  id        String   @id @default(uuid())
-  userId    String
-  contentId String
-  status    String // "pendent", "done"
-  count     Int      @default(0)
-  createdAt DateTime @default(now())
-
-  user    User    @relation(fields: [userId], references: [id])
-  content Content @relation(fields: [contentId], references: [id])
-}
-
-model EloUser {
-  id        String   @id @default(uuid())
-  userId    String
-  moduleId  String
-  elo       EloType
-  xp        Int
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id])
-  module Module @relation(fields: [moduleId], references: [id])
-}
-
-model PointsUser {
-  id        String   @id @default(uuid())
-  userId    String
-  bow       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
-}
-
-model Question {
-  id        String       @id @default(uuid())
-  type      TypeQuestion
-  createdAt DateTime     @default(now())
-
-  pointsMax  Int
-  difficulty Difficulty
-
-  dragAndDropQuestion    DragAndDropQuestion?
-  multipleChoiceQuestion MultipleChoiceQuestion?
-  userAnswers            UserQuestionAnswer[]
-}
-
-model DragAndDropQuestion {
-  id           String   @id
-  question     Question @relation(fields: [id], references: [id], onDelete: Cascade)
-  itemsOptions Json
-  targets      Json
-  correctPairs Json
-}
-
-model MultipleChoiceQuestion {
-  id            String   @id
-  question      Question @relation(fields: [id], references: [id], onDelete: Cascade)
-  statement     String
-  options       Json
-  correctAnswer String
-}
-
-model UserQuestionAnswer {
-  id         String   @id @default(uuid())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  isCorrect  Boolean
-  answeredAt DateTime @default(now())
-}
-
-//avaliar funcionamento
-model Achievement {
-  id          String            @id @default(uuid())
-  name        String
-  description String
-  iconUrl     String
-  users       UserAchievement[]
-}
-
-//avaliar funcionamento
-model UserAchievement {
-  id            String      @id @default(uuid())
-  user          User        @relation(fields: [userId], references: [id])
-  userId        String
-  achievement   Achievement @relation(fields: [achievementId], references: [id])
-  achievementId String
-  achievedAt    DateTime    @default(now())
-}
-
-//retirar depois, só deixeia agora para evitar bug no front
-model ModuleMatterContent {
-  id        String   @id @default(uuid())
-  name      String
-  options   String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

@@ -8,7 +8,14 @@ type AuthPayload {
   user: UserGraphQLType!
 }
 
+type ModuleTrailPayload {
+  description: String!
+  id: String!
+  name: String!
+}
+
 type Mutation {
+  getAllModules: ModuleTrailPayload!
   signin(input: SigninInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
 }

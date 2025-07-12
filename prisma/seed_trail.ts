@@ -14,11 +14,11 @@ function defaultButtons() {
 
 async function main() {
 
-//   await prisma.userContentProgress.deleteMany();
-//   await prisma.eloUser.deleteMany();
-//   await prisma.content.deleteMany();
-//   await prisma.submodule.deleteMany();
-//   await prisma.module.deleteMany();
+   await prisma.userContentProgress.deleteMany();
+   await prisma.eloUser.deleteMany();
+   await prisma.content.deleteMany();
+   await prisma.submodule.deleteMany();
+   await prisma.module.deleteMany();
 
 
   // Módulos

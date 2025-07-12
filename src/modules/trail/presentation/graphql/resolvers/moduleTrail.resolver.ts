@@ -11,10 +11,11 @@ export class ModuleTrailResolver {
     private readonly moduleTrail: AllModulesTrailPort,
     ) {}
     
-    @Mutation(() => ModuleTrailPayload)
+    @Mutation(() => [ModuleTrailPayload])
     async getAllModules(){
-        const modules = await this.moduleTrail.execute()
-        return modules
+        const res = await this.moduleTrail.execute()
+        console.log("ress", res)
+        return res
     }
 
 }

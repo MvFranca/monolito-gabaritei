@@ -15,7 +15,7 @@ type ModuleTrailPayload {
 }
 
 type Mutation {
-  getAllModules: ModuleTrailPayload!
+  getAllModules: [ModuleTrailPayload!]!
   signin(input: SigninInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
 }

@@ -7,7 +7,6 @@ import { join } from 'path';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module'; 
 import { ModuleTrailModule } from './modules/trail/trail.module';
-import { ModuleTrailResolver } from './modules/trail/presentation/graphql/resolvers/moduleTrail.resolver';
 
 @Module({
   imports: [

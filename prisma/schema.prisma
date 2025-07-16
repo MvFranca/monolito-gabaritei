@@ -50,6 +50,7 @@ model Module {
   elo         EloUser[]
   submodules  Submodule[]
   progress    UserContentProgress[]
+  revisions   UserContentRevision[] 
 }
 
 model Submodule {
@@ -85,10 +86,12 @@ model UserContentRevision {
   id        String   @id @default(uuid())
   userId    String
   contentId String
+  moduleId  String 
   status    String
   count     Int      @default(0)
   createdAt DateTime @default(now())
   content   Content  @relation(fields: [contentId], references: [id])
+  module    Module   @relation(fields: [moduleId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 }
 

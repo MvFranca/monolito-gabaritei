@@ -10,8 +10,7 @@ export class ModuleTrailAdapter implements ModuleTrailRepositoryPort {
   async findAll(): Promise<ModuleTrail[] | null> {
     try {
       const modules = await this.prisma.module.findMany({
-        omit: { updatedAt: true, createdAt: true },
-      });
+        omit: { updatedAt: true, createdAt: true }});
       return modules;
     } catch (err) {
       console.log(err);
@@ -19,9 +18,11 @@ export class ModuleTrailAdapter implements ModuleTrailRepositoryPort {
     }
   }
 
-  // async findById(id: string): Promise<ModuleTrail | null> {
-  //   return this.prisma.module.findById(id);
-  // }
+  async findById(id: string): Promise<ModuleTrail | null> {
+    return this.prisma.module.findUnique({
+      where: { id },
+    });
+  }
 
   // async create(moduleTrail: ModuleTrail): Promise<ModuleTrail> {
   //   return this.prisma.module.create(moduleTrail);

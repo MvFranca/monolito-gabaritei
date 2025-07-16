@@ -14,7 +14,6 @@ export class ModuleTrailResolver {
     @Mutation(() => [ModuleTrailPayload])
     async getAllModules(){
         const res = await this.moduleTrail.execute()
-        console.log("ress", res)
         return res
     }
 

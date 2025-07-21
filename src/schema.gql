@@ -8,6 +8,35 @@ type AuthPayload {
   user: UserGraphQLType!
 }
 
+type Button {
+  position: String
+  quantity: String
+  type: String
+}
+
+type ContentTrailPayload {
+  buttons: [Button!]!
+  description: String!
+  done: Boolean!
+  id: String
+  isRevision: Boolean
+  name: String!
+  position: Float!
+  wheight: Float!
+}
+
+input ModuleByIdInput {
+  moduleId: String!
+  userId: String!
+}
+
+type ModuleByIdPayload {
+  description: String!
+  id: String!
+  submodules: [SubmoduleByModulePayload!]!
+  title: String!
+}
+
 type ModuleTrailPayload {
   description: String!
   id: String!
@@ -16,6 +45,7 @@ type ModuleTrailPayload {
 
 type Mutation {
   getAllModules: [ModuleTrailPayload!]!
+  getModuleAndContentsById(input: ModuleByIdInput!): [ModuleByIdPayload!]!
   signin(input: SigninInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
 }
@@ -33,6 +63,14 @@ input SignupInput {
   email: String!
   name: String!
   password: String!
+}
+
+type SubmoduleByModulePayload {
+  contents: [ContentTrailPayload!]!
+  description: String!
+  id: String!
+  moduleId: String!
+  title: String!
 }
 
 type UserGraphQLType {

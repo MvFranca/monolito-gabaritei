@@ -32,7 +32,6 @@ export class AuthResolver {
 
   @Mutation(() => AuthPayload)
   async signin(@Args('input') input: SigninInput) {
-    console.log('Input received:', input);
     const dto = await this.SigninMapper.transform(input);
     const {token, user} = await this.signinUserInputPort.execute(dto);
     return { token, user, message: 'Login realizado com sucesso' };
